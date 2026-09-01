@@ -2,19 +2,26 @@ services:
   postgres:
     image: postgres:16
     environment:
-      POSTGRES_USER: westnet
-      POSTGRES_PASSWORD: westnet
       POSTGRES_DB: westnet
-    ports:
-      - "5432:5432"
+      POSTGRES_USER: westnet
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD:-change-me}
     volumes:
       - postgres_data:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U westnet -d westnet"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+    ports:
+      - "5432:5432"
   api:
     build: ./apps/api
-    env_file: .env
+    env_file: ./apps/api/.env
     depends_on:
-      - postgres
+      postgres:
+        condition: service_healthy
     ports:
       - "3000:3000"
+    restart: unless-stopped
 volumes:
   postgres_data:
