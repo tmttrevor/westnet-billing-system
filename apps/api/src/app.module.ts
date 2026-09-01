@@ -6,6 +6,7 @@ import { PasswordService } from './auth/password.service';
 import { JwtService } from './auth/jwt.service';
 import { JwtGuard } from './auth/jwt.guard';
 import { MpesaService } from './payments/mpesa.service';
+import { MpesaCallbackService } from './payments/mpesa-callback.service';
 import { PaymentController } from './payments/payment.controller';
 import { PaymentStateService } from './payments/payment-state.service';
 import { PaymentLedgerService } from './payments/payment-ledger.service';
@@ -24,5 +25,5 @@ import { PrismaModule } from './prisma/prisma.module';
 @Module({
  imports:[PrismaModule],
  controllers:[HealthController,AuthController,PaymentController,CustomerController,PublicConfigController,PlanController,SubscriptionController],
- providers:[PrismaAuthService,PasswordService,JwtService,JwtGuard,MpesaService,PaymentStateService,PaymentLedgerService,PaymentWebhookService,PrismaCustomerService,SubscriptionService,ProvisioningService,PublicConfigService,PrismaPlanService],
+ providers:[PrismaAuthService,PasswordService,JwtService,JwtGuard,MpesaService,MpesaCallbackService,PaymentStateService,PaymentLedgerService,PaymentWebhookService,PrismaCustomerService,SubscriptionService,ProvisioningService,PublicConfigService,PrismaPlanService],
 }) export class AppModule {}
