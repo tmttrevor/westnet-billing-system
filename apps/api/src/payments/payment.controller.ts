@@ -1,15 +1,19 @@
 import { Body, Controller, Post } from '@nestjs/common';
-import { PaymentService } from './payment.service';
+import { MpesaService } from './mpesa.service';
+import { parseMpesaCallback } from './mpesa-callback.parser';
 
 @Controller('payments')
 export class PaymentController {
-  constructor(private readonly payments: PaymentService) {}
+  constructor(private readonly mpesa: MpesaService) {}
 
   @Post('mpesa/stk-push')
-  stkPush(@Body() body: { tenantId: string; phone: string; amount: number; accountReference: string }) {
-    return this.payments.initiateStkPush(body);
+  stkPush(@Body() body: { phone: string; amount: number; accountReference: string; transactionDesc?: string }) {
+    return this.mpesa.stkPush(body);
   }
 
   @Post('mpesa/callback')
-  callback(@Body() body: unknown) { return this.payments.handleCallback(body); }
+  callback(@Body() body: unknown) {
+    const callback=parseMpesaCallback(body);
+    return { received:true, resultCode:callback.resultCode };
+  }
 }
