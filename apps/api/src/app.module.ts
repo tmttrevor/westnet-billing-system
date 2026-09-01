@@ -7,9 +7,11 @@ import { PaymentController } from './payments/payment.controller';
 import { CustomerService } from './customers/customer.service';
 import { CustomerController } from './customers/customer.controller';
 import { BillingService } from './billing/billing.service';
+import { PublicConfigService } from './config/public-config.service';
+import { PublicConfigController } from './config/public-config.controller';
 
 @Module({
-  controllers: [HealthController, AuthController, PaymentController, CustomerController],
-  providers: [AuthService, PaymentService, CustomerService, BillingService],
+  controllers: [HealthController, AuthController, PaymentController, CustomerController, PublicConfigController],
+  providers: [AuthService, PaymentService, CustomerService, BillingService, PublicConfigService],
 })
 export class AppModule {}
