@@ -9,11 +9,13 @@ import { CustomerController } from './customers/customer.controller';
 import { BillingService } from './billing/billing.service';
 import { PublicConfigService } from './config/public-config.service';
 import { PublicConfigController } from './config/public-config.controller';
-import { PlanService } from './plans/plan.service';
 import { PlanController } from './plans/plan.controller';
+import { PrismaPlanService } from './plans/prisma-plan.service';
+import { PrismaModule } from './prisma/prisma.module';
 
 @Module({
+  imports: [PrismaModule],
   controllers: [HealthController, AuthController, PaymentController, CustomerController, PublicConfigController, PlanController],
-  providers: [AuthService, PaymentService, CustomerService, BillingService, PublicConfigService, PlanService],
+  providers: [AuthService, PaymentService, CustomerService, BillingService, PublicConfigService, PrismaPlanService],
 })
 export class AppModule {}
