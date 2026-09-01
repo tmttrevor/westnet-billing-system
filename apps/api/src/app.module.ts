@@ -1,7 +1,10 @@
 import { Module } from '@nestjs/common';
 import { HealthController } from './health.controller';
-import { AuthService } from './auth/auth.service';
 import { AuthController } from './auth/auth.controller';
+import { PrismaAuthService } from './auth/prisma-auth.service';
+import { PasswordService } from './auth/password.service';
+import { JwtService } from './auth/jwt.service';
+import { JwtGuard } from './auth/jwt.guard';
 import { PaymentService } from './payments/payment.service';
 import { PaymentController } from './payments/payment.controller';
 import { CustomerController } from './customers/customer.controller';
@@ -16,8 +19,7 @@ import { PrismaPlanService } from './plans/prisma-plan.service';
 import { PrismaModule } from './prisma/prisma.module';
 
 @Module({
-  imports: [PrismaModule],
-  controllers: [HealthController, AuthController, PaymentController, CustomerController, PublicConfigController, PlanController, SubscriptionController],
-  providers: [AuthService, PaymentService, PrismaCustomerService, BillingService, SubscriptionService, PublicConfigService, PrismaPlanService],
-})
-export class AppModule {}
+ imports:[PrismaModule],
+ controllers:[HealthController,AuthController,PaymentController,CustomerController,PublicConfigController,PlanController,SubscriptionController],
+ providers:[PrismaAuthService,PasswordService,JwtService,JwtGuard,PaymentService,PrismaCustomerService,BillingService,SubscriptionService,PublicConfigService,PrismaPlanService],
+}) export class AppModule {}
