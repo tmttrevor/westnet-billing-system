@@ -1,0 +1,20 @@
+services:
+  postgres:
+    image: postgres:16
+    environment:
+      POSTGRES_USER: westnet
+      POSTGRES_PASSWORD: westnet
+      POSTGRES_DB: westnet
+    ports:
+      - "5432:5432"
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+  api:
+    build: ./apps/api
+    env_file: .env
+    depends_on:
+      - postgres
+    ports:
+      - "3000:3000"
+volumes:
+  postgres_data:
