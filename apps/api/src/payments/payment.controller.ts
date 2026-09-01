@@ -1,18 +1,20 @@
-import { Body, Controller, Post } from '@nestjs/common';
-import { MpesaService } from './mpesa.service';
+import { Body, Controller, Post, UseGuards } from '@nestjs/common';
 import { MpesaCallbackService } from './mpesa-callback.service';
+import { PaymentOrchestratorService } from './payment-orchestrator.service';
+import { JwtGuard } from '../auth/jwt.guard';
+import { TenantGuard } from '../common/tenant/tenant.guard';
+import { TenantId } from '../common/tenant/tenant.decorator';
 
 @Controller('payments')
 export class PaymentController {
-  constructor(private readonly mpesa: MpesaService, private readonly callbacks: MpesaCallbackService) {}
+  constructor(private readonly callbacks: MpesaCallbackService, private readonly payments: PaymentOrchestratorService) {}
 
+  @UseGuards(JwtGuard,TenantGuard)
   @Post('mpesa/stk-push')
-  stkPush(@Body() body: { phone: string; amount: number; accountReference: string; transactionDesc?: string }) {
-    return this.mpesa.stkPush(body);
+  stkPush(@TenantId() tenantId:string,@Body() body:{customerId:string;planId:string;phone:string}) {
+    return this.payments.startStkPush({tenantId,...body});
   }
 
   @Post('mpesa/callback')
-  callback(@Body() body: unknown) {
-    return this.callbacks.handle(body);
-  }
+  callback(@Body() body: unknown) { return this.callbacks.handle(body); }
 }
