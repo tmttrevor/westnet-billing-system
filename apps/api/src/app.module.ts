@@ -6,6 +6,7 @@ import { PasswordService } from './auth/password.service';
 import { JwtService } from './auth/jwt.service';
 import { JwtGuard } from './auth/jwt.guard';
 import { RolesGuard } from './auth/roles.guard';
+import { OnboardingGuard } from './auth/onboarding.guard';
 import { MpesaService } from './payments/mpesa.service';
 import { MpesaCallbackService } from './payments/mpesa-callback.service';
 import { PaymentOrchestratorService } from './payments/payment-orchestrator.service';
@@ -30,9 +31,4 @@ import { TenantOnboardingService } from './tenants/tenant-onboarding.service';
 import { AdminDashboardController } from './admin/admin-dashboard.controller';
 import { AdminDashboardService } from './admin/admin-dashboard.service';
 import { PrismaModule } from './prisma/prisma.module';
-
-@Module({
- imports:[PrismaModule],
- controllers:[HealthController,AuthController,PaymentController,CustomerController,PublicConfigController,PlanController,SubscriptionController,TenantOnboardingController,AdminDashboardController],
- providers:[PrismaAuthService,PasswordService,JwtService,JwtGuard,RolesGuard,MpesaService,MpesaCallbackService,PaymentOrchestratorService,PaymentStateService,PaymentLedgerService,PaymentWebhookService,PrismaCustomerService,SubscriptionService,ProvisioningService,ProvisioningJobService,PersistentProvisioningJobService,ProvisioningJobRunnerService,PublicConfigService,PrismaPlanService,TenantOnboardingService,AdminDashboardService]
-}) export class AppModule {}
+@Module({imports:[PrismaModule],controllers:[HealthController,AuthController,PaymentController,CustomerController,PublicConfigController,PlanController,SubscriptionController,TenantOnboardingController,AdminDashboardController],providers:[PrismaAuthService,PasswordService,JwtService,JwtGuard,RolesGuard,OnboardingGuard,MpesaService,MpesaCallbackService,PaymentOrchestratorService,PaymentStateService,PaymentLedgerService,PaymentWebhookService,PrismaCustomerService,SubscriptionService,ProvisioningService,ProvisioningJobService,PersistentProvisioningJobService,ProvisioningJobRunnerService,PublicConfigService,PrismaPlanService,TenantOnboardingService,AdminDashboardService]}) export class AppModule {}
