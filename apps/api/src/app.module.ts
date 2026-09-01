@@ -17,10 +17,11 @@ import { PrismaCustomerService } from './customers/prisma-customer.service';
 import { SubscriptionService } from './billing/subscription.service';
 import { SubscriptionController } from './billing/subscription.controller';
 import { ProvisioningService } from './billing/provisioning.service';
+import { ProvisioningJobService } from './billing/provisioning-job.service';
 import { PublicConfigService } from './config/public-config.service';
 import { PublicConfigController } from './config/public-config.controller';
 import { PlanController } from './plans/plan.controller';
 import { PrismaPlanService } from './plans/prisma-plan.service';
 import { PrismaModule } from './prisma/prisma.module';
 
-@Module({ imports:[PrismaModule], controllers:[HealthController,AuthController,PaymentController,CustomerController,PublicConfigController,PlanController,SubscriptionController], providers:[PrismaAuthService,PasswordService,JwtService,JwtGuard,MpesaService,MpesaCallbackService,PaymentOrchestratorService,PaymentStateService,PaymentLedgerService,PaymentWebhookService,PrismaCustomerService,SubscriptionService,ProvisioningService,PublicConfigService,PrismaPlanService] }) export class AppModule {}
+@Module({ imports:[PrismaModule], controllers:[HealthController,AuthController,PaymentController,CustomerController,PublicConfigController,PlanController,SubscriptionController], providers:[PrismaAuthService,PasswordService,JwtService,JwtGuard,MpesaService,MpesaCallbackService,PaymentOrchestratorService,PaymentStateService,PaymentLedgerService,PaymentWebhookService,PrismaCustomerService,SubscriptionService,ProvisioningService,ProvisioningJobService,PublicConfigService,PrismaPlanService] }) export class AppModule {}
