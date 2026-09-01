@@ -22,4 +22,23 @@ model Customer { id String @id @default(uuid()) tenantId String name String phon
 model Router { id String @id @default(uuid()) tenantId String name String type RouterType host String apiPort Int? tenant Tenant @relation(fields:[tenantId],references:[id]) }
 model Plan { id String @id @default(uuid()) tenantId String name String price Decimal @db.Decimal(12,2) durationMinutes Int tenant Tenant @relation(fields:[tenantId],references:[id]) subscriptions Subscription[] }
 model Subscription { id String @id @default(uuid()) customerId String planId String status SubscriptionStatus @default(ACTIVE) startsAt DateTime @default(now()) expiresAt DateTime customer Customer @relation(fields:[customerId],references:[id]) plan Plan @relation(fields:[planId],references:[id]) }
-model Payment { id String @id @default(uuid()) tenantId String reference String @unique phone String amount Decimal @db.Decimal(12,2) status PaymentStatus @default(PENDING) providerReceipt String? rawCallback Json? tenant Tenant @relation(fields:[tenantId],references:[id]) createdAt DateTime @default(now()) }
+model Payment {
+  id String @id @default(uuid())
+  tenantId String
+  customerId String
+  planId String
+  routerId String?
+  reference String @unique
+  phone String
+  amount Decimal @db.Decimal(12,2)
+  status PaymentStatus @default(PENDING)
+  checkoutRequestId String? @unique
+  merchantRequestId String?
+  providerReceipt String? @unique
+  rawCallback Json?
+  processedAt DateTime?
+  tenant Tenant @relation(fields:[tenantId],references:[id])
+  createdAt DateTime @default(now())
+  @@index([tenantId,status])
+  @@index([customerId,planId])
+}
